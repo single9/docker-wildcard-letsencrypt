@@ -21,7 +21,7 @@ Usage
 
     docker run -it --rm \
         -v "$DIR/ssl:/etc/letsencrypt" \
-        -e MODE=staging
+        -e MODE=staging \
         -e DOMAIN_NAME=<Your Domain Name> \
         -e CERTBOT_EMAIL=<Your email for certbot> \
         -e CLOUDFLARE_EMAIL=<Your cloudflare email> \
