@@ -1,6 +1,12 @@
 Docker Wildcard Certbot
 =================
 
+Get Let's Encrypt wildcard SSL certificates validated by DNS challenges.
+
+**NOTE**
+
+This project currently only support Cloudflare DNS challenges.
+
 Build
 -----------
 
