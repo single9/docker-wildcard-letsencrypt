@@ -15,13 +15,15 @@ Build
 Usage
 -----------
 
+    docker pull single9/wildcard-letsencrypt
+
     docker run -it --rm \
         -v "$DIR/ssl:/etc/letsencrypt" \
         -e DOMAIN_NAME=<Your Domain Name> \
         -e CERTBOT_EMAIL=<Your email for certbot> \
         -e CLOUDFLARE_EMAIL=<Your cloudflare email> \
         -e CLOUDFLARE_API_KEY=<Your cloudflare api key> \
-        wildcard-certbot
+        single9/wildcard-letsencrypt
 
 ### Staging
 
@@ -32,4 +34,4 @@ Usage
         -e CERTBOT_EMAIL=<Your email for certbot> \
         -e CLOUDFLARE_EMAIL=<Your cloudflare email> \
         -e CLOUDFLARE_API_KEY=<Your cloudflare api key> \
-        wildcard-certbot
+        single9/wildcard-letsencrypt
