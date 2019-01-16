@@ -33,7 +33,7 @@ certbot certonly $ARGS \
     --manual-auth-hook /opt/dns-scripts/authenticator.sh \
     --manual-cleanup-hook /opt/dns-scripts/cleanup.sh \
     --server $ACME_SERVER \
-    -d *.$DOMAIN_NAME
+    -d *.$DOMAIN_NAME -d $DOMAIN_NAME
 
 if [ "$SERVER" = "haproxy" ]
 then
