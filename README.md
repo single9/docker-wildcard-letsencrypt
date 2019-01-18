@@ -36,6 +36,7 @@ If you want reload NGINX container after certbot is finished, add the environmen
 
     docker run -it --rm \
         -v "$DIR/ssl:/etc/letsencrypt" \
+        -v /var/run/docker.sock:/var/run/docker.sock
         -e NGINX_CONTAINER_NAME=<Container Name> \
         -e DOMAIN_NAME=<Your Domain Name> \
         -e CERTBOT_EMAIL=<Your email for certbot> \
