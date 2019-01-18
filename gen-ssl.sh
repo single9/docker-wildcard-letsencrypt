@@ -1,7 +1,4 @@
-#!/bin/sh
-#
-# Usage: sudo ./create-ssl.sh [DOMAIN_NAME]
-# Your SSL files is here: ./ssl
+#!/bin/bash
 #
 # Author: Duye Chen
 
@@ -12,6 +9,7 @@ then
 fi
 
 DOMAIN_NAME="$DOMAIN_NAME"
+NGINX_CONTAINER_NAME="$NGINX_CONTAINER_NAME"
 PATH=$PATH
 DIR=`pwd`
 ACME_SERVER="https://acme-v02.api.letsencrypt.org/directory"
@@ -42,4 +40,10 @@ then
         /etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem \
     | tee /etc/letsencrypt/haproxy.pem &>/dev/null \
     && echo "Your pem file is generated!"
+fi
+
+if [ -n "$NGINX_CONTAINER_NAME" ]
+then
+    echo 'Reload NGINX'
+    docker exec -it $NGINX_CONTAINER_NAME nginx -s reload
 fi
