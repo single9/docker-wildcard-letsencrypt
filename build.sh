@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t wildcard-certbot .
+docker build -t wildcard-letsencrypt .
