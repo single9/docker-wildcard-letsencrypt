@@ -11,4 +11,6 @@ RUN apk -U upgrade \
     && pip install certbot-dns-cloudflare \
     && rm -rf /var/cache/apk/*
 
+COPY ./gen-ssl.sh /gen-ssl.sh
+
 ENTRYPOINT [ "/gen-ssl.sh" ]
