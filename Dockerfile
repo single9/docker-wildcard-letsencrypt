@@ -8,9 +8,7 @@ RUN apk -U upgrade \
     ca-certificates \
     e2fsprogs \
     docker \
+    && pip install certbot-dns-cloudflare \
     && rm -rf /var/cache/apk/*
-
-COPY ./dns-scripts/ /opt/dns-scripts/
-COPY ./gen-ssl.sh /gen-ssl.sh
 
 ENTRYPOINT [ "/gen-ssl.sh" ]

@@ -22,16 +22,28 @@ fi
 
 echo "Generating..."
 
-certbot certonly $ARGS \
+echo "dns_cloudflare_email = $CLOUDFLARE_EMAIL" >> /cloudflare.ini
+echo "dns_cloudflare_api_key = $CLOUDFLARE_API_KEY" >> /cloudflare.ini
+
+chmod 600 /cloudflare.ini
+
+CERTBOT="certbot certonly $ARGS \
     --agree-tos \
     --non-interactive \
     -m $CERTBOT_EMAIL \
     --manual-public-ip-logging-ok \
-    --manual --preferred-challenges=dns \
-    --manual-auth-hook /opt/dns-scripts/authenticator.sh \
-    --manual-cleanup-hook /opt/dns-scripts/cleanup.sh \
+    --dns-cloudflare \
+    --dns-cloudflare-credentials /cloudflare.ini \
     --server $ACME_SERVER \
-    -d *.$DOMAIN_NAME -d $DOMAIN_NAME
+    -d *.$DOMAIN_NAME -d $DOMAIN_NAME"
+
+if [ -n "$SLACK_WEBHOOK" ]
+then
+    $CERTBOT &> /certbot.log
+    cat /certbot.log
+else
+    $CERTBOT
+fi
 
 if [ "$SERVER" = "haproxy" ]
 then
@@ -46,4 +58,15 @@ if [ -n "$NGINX_CONTAINER_NAME" ]
 then
     echo 'Reload NGINX'
     docker exec -it $NGINX_CONTAINER_NAME nginx -s reload
+fi
+
+# Send to Slack
+if [ -n "$SLACK_WEBHOOK" ]
+then
+    USER_NAME="$DOMAIN_NAME certbot"
+    CERTBOT_LOG=$(sed 's/"/\\"/g' /certbot.log)
+    SLACK_TEXT='Certbot is updated your SSL Certification'
+    SLACK_TEXT="$SLACK_TEXT\n\`\`\`\n${CERTBOT_LOG}\n\`\`\`"
+
+    curl -X POST --data-urlencode "payload={\"channel\": \"$SLACK_WEBHOOK_CHANNEL\", \"username\": \"$USER_NAME\", \"text\": \"${SLACK_TEXT}\"}" $SLACK_WEBHOOK
 fi
