@@ -47,6 +47,7 @@ CERTBOT="certbot certonly $ARGS \
     --dns-cloudflare \
     --dns-cloudflare-credentials /cloudflare.ini \
     --server $ACME_SERVER \
+    --expand \
     $CERTBOT_DOMAINS"
 
 if [ -n "$SLACK_WEBHOOK" ]
