@@ -18,7 +18,6 @@ Usage
         -e CERTBOT_EMAIL=<Your email for certbot> \
         -e CLOUDFLARE_EMAIL=<Your cloudflare email> \
         -e CLOUDFLARE_API_KEY=<Your cloudflare api key> \
-        -e CLOUDFLARE_API_KEY=<Your cloudflare api key> \
         -e SLACK_WEBHOOK=https://hooks.slack.com/services/XXXXXX/XXXXXX/XXXXXXXXXXXXXX \
         -e SLACK_WEBHOOK_CHANNEL=<SLACK_CHANNEL> \
         single9/wildcard-letsencrypt
